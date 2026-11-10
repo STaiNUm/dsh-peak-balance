@@ -1,0 +1,31 @@
+{
+  "name": "dsh-peak-balance",
+  "version": "1.0.0",
+  "description": "DeepSeek Harness plugin: peak or off-peak pricing status and the account balance in the conversation header.",
+  "license": "MIT",
+  "author": "STaiNUm",
+  "type": "module",
+  "keywords": ["deepseek-harness", "dsh-plugin", "pricing", "balance"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/STaiNUm/dsh-peak-balance.git"
+  },
+  "homepage": "https://github.com/STaiNUm/dsh-peak-balance#readme",
+  "bugs": {
+    "url": "https://github.com/STaiNUm/dsh-peak-balance/issues"
+  },
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": ["index.js", "client.js", "cordis.patch.yml", "locale/*.json", "icon.svg", "README.md", "LICENSE"],
+  "dsh": {
+    "bundle": { "patch": "./cordis.patch.yml" },
+    "client": {
+      "platform": "web",
+      "immediately": true
+    }
+  }
+}
