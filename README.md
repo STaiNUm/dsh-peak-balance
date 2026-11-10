@@ -18,23 +18,20 @@ If no account is signed in, the balance shows as `—` and the pricing indicator
 
 ## Install
 
-```bash
-npx @deepseek-ai/dsh plugin add github:STaiNUm/dsh-peak-balance
-```
-
-or with a global CLI:
+The plugin is a profile bundle: install it into the profile you boot (`desktop` for the app, `web` for `dsh web`). The `plugin` subcommand forwards to pnpm and then adds the package to `dsh.profile.bundles`.
 
 ```bash
-dsh plugin add github:STaiNUm/dsh-peak-balance
+dsh plugin --profile desktop add github:STaiNUm/dsh-peak-balance
 ```
 
-Restart the Harness app (or reload its window) after installing — client bundles load at page boot.
+`dsh` is the CLI bundled with the desktop app
+(`…/DeepSeek Harness/resources/runtime/cli/bin/dsh.cmd` on Windows); `npx @deepseek-ai/dsh …` works too.
 
-Local checkout works too:
+Restart the Harness app after installing — client bundles load when the page boots. From a local checkout, point `add` at the directory instead:
 
 ```bash
 git clone https://github.com/STaiNUm/dsh-peak-balance.git
-dsh plugin add ./dsh-peak-balance
+dsh plugin --profile desktop add ./dsh-peak-balance
 ```
 
 ## How it works
