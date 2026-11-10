@@ -7,6 +7,8 @@ window.__ModuleLoader__.load({
     /** Locale namespace owned by this plugin. */
     const NS = 'peak-balance';
     const MINUTE = 60000;
+    /** Balance polling interval while the window is visible. */
+    const BALANCE_REFRESH_MS = 30000;
 
     /**
      * DeepSeek peak blocks as [start, end) minutes from 00:00 UTC.
@@ -306,15 +308,21 @@ window.__ModuleLoader__.load({
           React.useEffect(() => {
             let cancelled = false;
             let timer = 0;
+            let inFlight = false;
 
             const load = () => {
-              if (cancelled) return;
+              if (cancelled || inFlight) return;
+              // Skip the timer while the window is hidden; becoming visible refreshes at once.
+              if (typeof document !== 'undefined' && document.hidden) return;
+              inFlight = true;
               setBalance((prev) => (prev.status === 'ready' ? prev : { status: 'loading' }));
               requestBalance().then(
                 (result) => {
+                  inFlight = false;
                   if (!cancelled) setBalance(result);
                 },
                 (error) => {
+                  inFlight = false;
                   console.error('peak-balance: balance request failed', error);
                   if (!cancelled) setBalance({ status: 'error' });
                 },
@@ -325,13 +333,19 @@ window.__ModuleLoader__.load({
             load();
 
             const onFocus = () => load();
+            const onVisibility = () => {
+              if (typeof document !== 'undefined' && document.hidden) return;
+              load();
+            };
             window.addEventListener('focus', onFocus);
-            timer = window.setInterval(load, 5 * MINUTE);
+            document.addEventListener('visibilitychange', onVisibility);
+            timer = window.setInterval(load, BALANCE_REFRESH_MS);
 
             return () => {
               cancelled = true;
               reloadRef.current = null;
               window.removeEventListener('focus', onFocus);
+              document.removeEventListener('visibilitychange', onVisibility);
               window.clearInterval(timer);
             };
           }, []);

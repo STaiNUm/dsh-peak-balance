@@ -7,7 +7,7 @@ A [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) plugin tha
 ● Пиковое время   · ¥60,94        ← peak, amber dot
 ```
 
-The chip sits in the header's leading seat, so it is visible both on the start screen and inside a session. Hover it for the pricing schedule, the local time of the next change, per-currency balances and bonus credit. Click to refresh; it also refreshes when the window regains focus and every five minutes.
+The chip sits in the header's leading seat, so it is visible both on the start screen and inside a session. It refreshes the balance every **30 seconds** while the window is visible, immediately when the window regains focus or becomes visible again, and on click. Hover it for the pricing schedule, the local time of the next change, per-currency balances and bonus credit.
 
 ## What it shows
 
